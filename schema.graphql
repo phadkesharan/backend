@@ -1,0 +1,277 @@
+scalar Datetime
+
+type User {
+  name: String!
+  id: String!
+  email: String!
+}
+type UserResponse {
+  user: User
+  success: Boolean
+  errors: [String]
+  token: String
+}
+input RegisterInput {
+  # user name field
+  name: String!
+  # user password
+  password: String!
+  # user confirm password
+  confirmPassword: String!
+  #user email
+  email: String!
+}
+input UpdateUserInput {
+  # user name field
+  name: String
+  # user password
+  mailServer: String
+  mailServerUserName: String
+  mailServerPassword: String
+  #user email
+  linkedInToken: String
+}
+input ChangePasswordInput {
+  prevPassword: String!
+  password: String!
+  # user confirm password
+  confirmPassword: String!
+}
+input SequenceInstructionInput {
+  instructionType: String!
+  instruction: String!
+  wait: String
+  jump: Int
+  text: String
+  end: Boolean!
+}
+input coordinatesInput {
+  x: Float!
+  y: Float!
+}
+input dndDataInput {
+  label: String
+  id: String
+  text: String
+  duration: String
+}
+input dndFlowInput {
+  id: String!
+  position: coordinatesInput
+  type: String
+  data: dndDataInput
+  source: String
+  sourceHandle: String
+  target: String
+  targetHandle: String
+}
+input CreateSequenceInput {
+  name: String!
+  sequenceInstructions: [SequenceInstructionInput]!
+  dndFlow: [dndFlowInput]
+}
+input AddProspectsInput {
+  prospects: [PropectInput]!
+  sequenceId: String!
+  force: Boolean!
+}
+input PropectInput {
+  url: String!
+  name: String!
+  img: String
+  degree: String
+  role: String
+  location: String
+  summary: String
+  mutalConnections: String
+  contactInfo: String
+  email: String
+}
+type LinkedInMessage {
+  sentBy: String!
+  time: String!
+  message: String!
+  timeHeader: String
+  sentById: String
+}
+type MessageThread {
+  name: String!
+  url: String!
+  img: String!
+  messages: [LinkedInMessage]!
+}
+type GetMessagesResponse {
+  data: MessageThread
+  status: String!
+}
+type SendMessageResponse {
+  data: String!
+  status: String!
+}
+type SearchResult {
+  url: String!
+  img: String!
+  name: String!
+  degree: String
+  role: String
+  location: String
+  summary: String
+  mutalConnections: String
+}
+
+type SearchResultResponse {
+  data: [SearchResult]
+  alreadyinSeq: [SearchResult]
+  withoutImage: [SearchResult]
+  containingKeywords: [SearchResult]
+  containingCompanies: [SearchResult]
+
+  status: String!
+}
+type SendConnectResponse {
+  data: String!
+  status: String!
+}
+type SequenceInstruction {
+  instructionType: String
+  instruction: String
+  wait: String
+  jump: Int
+  text: String
+  end: Boolean
+}
+type Prospect {
+  id: String
+  url: String
+  img: String
+  name: String
+  degree: String
+  role: String
+  location: String
+  summary: String
+  mutalConnections: String
+  currentStep: Int
+  nextRunTime: String
+  jobId: String
+  remarks: [String]
+  dateCreated: Datetime
+  email: String
+}
+type SequenceMessages {
+  to: String!
+  text: String!
+  dateCreated: Datetime!
+  read: Boolean
+  replied: Boolean
+  repliedOn: Datetime
+  readOn: Datetime
+}
+type SequenceConnections {
+  to: String!
+  text: String!
+  dateCreated: Datetime!
+  status: Boolean
+  acceptedOn: Datetime
+}
+type UserSequence {
+  id: String!
+  userId: String!
+  name: String!
+  prospects: [Prospect]
+  completedProspects: [Prospect]
+  dateCreated: Datetime
+  sequenceMessages: [SequenceMessages]
+  sequenceConnections: [SequenceConnections]
+  messagesSent: Int
+  messagesSentToday: Int
+  connectionsSent: Int
+  connectionsSentToday: Int
+  instructions: [SequenceInstruction]
+  dndFlow: [dndFlow]
+}
+type coordinates {
+  x: Int!
+  y: Int!
+}
+type dndData {
+  label: String
+  id: String
+  text: String
+  duration: String
+}
+type dndFlow {
+  id: String!
+  position: coordinates
+  type: String
+  data: dndData
+  source: String
+  sourceHandle: String
+  target: String
+  targetHandle: String
+}
+type Query {
+  hello: String!
+  linkedInToken(id: String!): String!
+  getSequences: [UserSequence]
+}
+
+type AddProspectOutput {
+  statusCode: Int!
+  addedPrsopects: [Prospect]
+  alreadyInSame: [Prospect]
+  alreadyInDifferent: [UserSequence]
+  addedPrsopectsLength: Int
+}
+input updateFlowInput {
+  dndFlow: [dndFlowInput]
+  instructions: [SequenceInstructionInput]!
+  sequenceId: String!
+}
+type Mutation {
+  register(registerInput: RegisterInput!): UserResponse!
+  login(email: String!, password: String!): UserResponse!
+  addTokenWithCred(email: String!, password: String!): String!
+  addToken(linkedInToken: String!): String!
+  updateUser(updateUser: UpdateUserInput!): String!
+  changePassword(
+    prevPassword: String!
+    password: String!
+    confirmPassword: String!
+  ): String!
+  addSequence(createSequence: CreateSequenceInput!): UserSequence!
+  removeSequence(seqIds: [String]!): String!
+  removeProspect(prospectIds: [String]!): String!
+
+  addProspects(addProspects: AddProspectsInput!): AddProspectOutput!
+  updateFlow(updateFlow: updateFlowInput): UserSequence!
+}
+
+type Subscription {
+  sendMessage(
+    messageText: String!
+    profileLink: String!
+    token: String!
+  ): SendMessageResponse!
+  sendConnect(profileLink: String!, token: String!): SendConnectResponse!
+  searchResults(
+    searchLink: String!
+    resultsToScrap: Int!
+    token: String!
+    hideAlready: Boolean!
+    sequenceId: String
+    keywords: [String]
+    companies: [String]
+    hideImage: Boolean!
+    hideCompany: Boolean!
+    hideKeywords: Boolean!
+  ): SearchResultResponse!
+  getMessages(limit: Int!, token: String!): GetMessagesResponse!
+  viewProfile(token: String!, link: String!): SendMessageResponse!
+  sendFollow(token: String!, link: String!): SendMessageResponse!
+  likePost(token: String!, link: String!): SendMessageResponse!
+  addTokenWithCred(
+    email: String!
+    password: String!
+    token: String!
+  ): SendConnectResponse!
+}
