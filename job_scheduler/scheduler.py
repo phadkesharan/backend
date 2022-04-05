@@ -4,7 +4,7 @@ from apscheduler.jobstores.mongodb import MongoDBJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 import pytz
 from tzlocal import get_localzone
-from db.database import db
+from app.db.database import db
 #from datetime import datetime, timedelta
 local_tz = get_localzone() 
 executors = {

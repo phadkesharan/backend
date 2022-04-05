@@ -2,21 +2,21 @@
 from ariadne import QueryType, make_executable_schema, load_schema_from_path,format_error
 from ariadne.asgi import GraphQL
 from fastapi import FastAPI, HTTPException, Depends, Request
-from mutations import mutation
-from db.models import User,UserSequence
+from .mutations import mutation
+from .db.models import User,UserSequence
 from ariadne import ScalarType
-from subscriptions import subscription
+from .subscriptions import subscription
 from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 # from fastapi_jwt_auth import AuthJWT
 # from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
-from api import app
-from db.database import db
+from .api import app
+from .db.database import db
 from graphql.error.graphql_error import GraphQLError
-from utils import security
-from utils.error import MyGraphQLError
+from .utils import security
+from .utils.error import MyGraphQLError
 from dateutil.parser import * 
 type_defs = load_schema_from_path("schema.graphql")
 

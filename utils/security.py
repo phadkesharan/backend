@@ -5,13 +5,13 @@ import sys
 import traceback
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional, Union
-from db.models import User
+from app.db.models import User
 from fastapi import security
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
 # from core import crud
-from db.config import settings
+from app.db.config import settings
 from .error import MyGraphQLError
 import bcrypt
 ALGORITHM = "HS256"

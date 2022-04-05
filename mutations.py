@@ -7,22 +7,22 @@ from bson.objectid import ObjectId
 from graphql.error.graphql_error import GraphQLError
 from mongoengine.queryset.visitor import Q
 from pymongo.read_preferences import Secondary
-from db.models import DndFlow, Prospect, SequenceInstruction, User, UserSequence
+from .db.models import DndFlow, Prospect, SequenceInstruction, User, UserSequence
 from types import SimpleNamespace
 import time
 import bcrypt
 import asyncio
-from utils import security
-from utils.error import MyGraphQLError
-from utils.validator import registerInputValidate,loginInputValidate,updateUserValidate,changePasswordValidate,sendMessageValidate,sendConnectValidate
-from db import config
+from .utils import security
+from .utils.error import MyGraphQLError
+from .utils.validator import registerInputValidate,loginInputValidate,updateUserValidate,changePasswordValidate,sendMessageValidate,sendConnectValidate
+from .db import config
 from datetime import datetime, timedelta
-from linkedin_scraper import Person, actions
+from .linkedin_scraper import Person, actions
 from selenium import webdriver
 import json
-from job_scheduler.scheduler import scheduler
-from job_scheduler.sequence_scheduler import seq_scheduler 
-from job_scheduler.get_token import fetchandSaveToken
+from .job_scheduler.scheduler import scheduler
+from .job_scheduler.sequence_scheduler import seq_scheduler 
+from .job_scheduler.get_token import fetchandSaveToken
 mutation = ObjectType("Mutation")
 async def sleep():
     time.sleep(10)

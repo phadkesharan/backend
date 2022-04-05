@@ -3,18 +3,18 @@ from asyncio.tasks import Task
 from os import error
 from ariadne import SubscriptionType
 import asyncio
-from job_scheduler.get_token import fetchandSaveToken
-from utils import security
+from .job_scheduler.get_token import fetchandSaveToken
+from .utils import security
 from ariadne.asgi import GraphQL
 from graphql.error.graphql_error import GraphQLError
-from linkedin_scraper import Person, actions
+from .linkedin_scraper import Person, actions
 from selenium import webdriver
-from utils.error import MyGraphQLError
+from .utils.error import MyGraphQLError
 #from db.store import queue
 import threading
 from selenium.webdriver.chrome.options import Options
-from db.models import UserSequence
-from utils.validator import updateUserValidate
+from .db.models import UserSequence
+from .utils.validator import updateUserValidate
 
 subscription = SubscriptionType()
 

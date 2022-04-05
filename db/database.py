@@ -25,7 +25,7 @@ MONGO_URL = f"mongodb+srv://{MONGO_USER}:{MONGO_PASS}@cluster0.klscv.mongodb.net
 #mongodb+srv://doadmin:<replace-with-your-password>@db-mongodb-nyc3-17443-8aed69d6.mongo.ondigitalocean.com/admin?authSource=admin&replicaSet=db-mongodb-nyc3-17443&tls=true&tlsCAFile=<replace-with-path-to-CA-cert>
 # MONGO_STRING = f"mongodb+srv://doadmin:{PASSWORD}@db-mongodb-nyc3-17443-8aed69d6.mongo.ondigitalocean.com/admin?authSource=admin&replicaSet=db-mongodb-nyc3-17443&tls=true&tlsCAFile={CA_PATH}"
 
-MONGO_STRING = "mongodb+srv://doadmin:3b14L8Y6Et07MgS9@db-mongodb-nyc3-17443-8aed69d6.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc3-17443&tlsCAFile=ca-certificate.crt"
+MONGO_STRING = "mongodb+srv://doadmin:3b14L8Y6Et07MgS9@db-mongodb-nyc3-17443-8aed69d6.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc3-17443&tlsCAFile=app/ca-certificate.crt"
 db = connect(
     DATABASE,
     host=MONGO_STRING,

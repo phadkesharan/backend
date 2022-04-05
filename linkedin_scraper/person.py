@@ -1,5 +1,5 @@
 import asyncio
-from linkedin_scraper import actions
+from app.linkedin_scraper import actions
 from typing import TextIO
 import requests
 from selenium import webdriver
@@ -12,7 +12,7 @@ import time
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
-from db.store import queue
+from app.db.store import queue
 class Person(Scraper):
 
     __TOP_CARD = "pv-top-card"
